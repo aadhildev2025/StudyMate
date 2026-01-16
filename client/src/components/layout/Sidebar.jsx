@@ -43,6 +43,8 @@ const Sidebar = () => {
                     <Sparkles size={16} /> AI Assistant
                 </div>
                 <p className="text-xs text-gray-400 mb-3">Stuck on a question? Get instant explanations.</p>
+                <NavLink to="/chat" className="block w-full text-center py-2 bg-blue-600 hover:bg-blue-500 text-white rounded-lg text-sm font-bold shadow-lg shadow-blue-900/20 transition-all">
+                    Ask Now
                 </NavLink>
             </div>
 
