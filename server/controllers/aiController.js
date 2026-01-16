@@ -1,10 +1,13 @@
 const { GoogleGenerativeAI } = require("@google/generative-ai");
 
 // Initialize Gemini
-if (!process.env.GEMINI_API_KEY) {
-    console.error("CRITICAL: GEMINI_API_KEY is not defined in environment variables!");
+const key = process.env.GEMINI_API_KEY || "";
+if (!key) {
+    console.error("CRITICAL: GEMINI_API_KEY is missing!");
+} else {
+    console.log(`GEMINI_API_KEY loaded. Starts with: ${key.substring(0, 4)}... ends with: ...${key.substring(key.length - 4)}`);
 }
-const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY || "");
+const genAI = new GoogleGenerativeAI(key);
 const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
 
 exports.generateNote = async (req, res) => {
