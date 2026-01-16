@@ -4,6 +4,7 @@ import ReactMarkdown from 'react-markdown';
 import remarkMath from 'remark-math';
 import rehypeKatex from 'rehype-katex';
 import 'katex/dist/katex.min.css';
+import { API_BASE_URL } from '../config';
 
 const AIChat = () => {
     const [messages, setMessages] = useState([
@@ -33,7 +34,7 @@ const AIChat = () => {
         try {
             // Using the same note generation endpoint for now, or a dedicated chat endpoint
             // Ideally we should create a dedicated /chat endpoint on the backend
-            const res = await fetch('http://localhost:5000/api/ai/note', {
+            const res = await fetch(`${API_BASE_URL}/ai/note`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ topic: input, subject: 'General Science' }),

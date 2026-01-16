@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { Sparkles, BookOpen, Loader, ArrowLeft } from 'lucide-react';
 import ReactMarkdown from 'react-markdown'; // Ideally user should install this, but fallback is text
+import { API_BASE_URL } from '../config';
 
 const LessonView = () => {
     const { subjectId, topicId } = useParams();
@@ -12,8 +13,7 @@ const LessonView = () => {
         setLoading(true);
         try {
             // In production, use environment variable for API URL
-            // Defaulting to localhost:5000 for this task
-            const res = await fetch('http://localhost:5000/api/ai/note', {
+            const res = await fetch(`${API_BASE_URL}/ai/note`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ topic: topicId, subject: subjectId }),
