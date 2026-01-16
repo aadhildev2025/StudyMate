@@ -2,7 +2,7 @@ const { GoogleGenerativeAI } = require("@google/generative-ai");
 
 // Initialize Gemini
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
-const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
+const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash-latest" });
 
 exports.generateNote = async (req, res) => {
     const { topic, subject } = req.body;
@@ -30,7 +30,11 @@ exports.generateNote = async (req, res) => {
         res.json({ content: text });
     } catch (error) {
         console.error("AI Error:", error);
-        res.status(500).json({ error: "Failed to generate content. Please check API Key." });
+        res.status(500).json({
+            error: "Failed to generate content.",
+            details: error.message,
+            stack: process.env.NODE_ENV === 'development' ? error.stack : undefined
+        });
     }
 };
 
@@ -52,6 +56,9 @@ exports.generateQuiz = async (req, res) => {
         res.json({ quiz });
     } catch (error) {
         console.error("AI Quiz Error:", error);
-        res.status(500).json({ error: "Failed to generate quiz." });
+        res.status(500).json({
+            error: "Failed to generate quiz.",
+            details: error.message
+        });
     }
 };
