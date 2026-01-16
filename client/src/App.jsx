@@ -9,6 +9,7 @@ const SubjectDetail = lazy(() => import('./pages/SubjectDetail'));
 const Practical = lazy(() => import('./pages/Practical'));
 const LessonView = lazy(() => import('./pages/LessonView'));
 const AIChat = lazy(() => import('./pages/AIChat'));
+const Quiz = lazy(() => import('./pages/Quiz'));
 const Profile = lazy(() => import('./pages/Profile'));
 
 function App() {
