@@ -1,7 +1,10 @@
 const { GoogleGenerativeAI } = require("@google/generative-ai");
 
 // Initialize Gemini
-const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
+if (!process.env.GEMINI_API_KEY) {
+    console.error("CRITICAL: GEMINI_API_KEY is not defined in environment variables!");
+}
+const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY || "");
 const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
 
 exports.generateNote = async (req, res) => {
@@ -31,19 +34,10 @@ exports.generateNote = async (req, res) => {
     } catch (error) {
         console.error("AI Error:", error);
 
-        // Diagnostic: List available models if the current one fails
-        try {
-            console.log("Fetching available models for diagnostics...");
-            const models = await genAI.listModels();
-            console.log("Available models:", JSON.stringify(models, null, 2));
-        } catch (listError) {
-            console.error("Could not list models:", listError.message);
-        }
-
         res.status(500).json({
             error: "Failed to generate content.",
             details: error.message,
-            stack: process.env.NODE_ENV === 'development' ? error.stack : undefined
+            apiKeyPresent: !!process.env.GEMINI_API_KEY
         });
     }
 };
