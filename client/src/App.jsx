@@ -9,7 +9,7 @@ const SubjectDetail = lazy(() => import('./pages/SubjectDetail'));
 const Practical = lazy(() => import('./pages/Practical'));
 const LessonView = lazy(() => import('./pages/LessonView'));
 const AIChat = lazy(() => import('./pages/AIChat'));
-const Quiz = lazy(() => import('./pages/Quiz'));
+const Profile = lazy(() => import('./pages/Profile'));
 
 function App() {
   return (
@@ -28,7 +28,7 @@ function App() {
             <Route path="practical" element={<Practical />} />
             <Route path="chat" element={<AIChat />} />
             <Route path="quiz" element={<Quiz />} />
-            <Route path="profile" element={<div className="p-4">Profile Page (Coming Soon)</div>} />
+            <Route path="profile" element={<Profile />} />
             <Route path="*" element={<div className="p-4">404 - Not Found</div>} />
           </Route>
         </Routes>
