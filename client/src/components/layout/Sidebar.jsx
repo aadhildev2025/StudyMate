@@ -43,11 +43,20 @@ const Sidebar = () => {
                     <Sparkles size={16} /> AI Assistant
                 </div>
                 <p className="text-xs text-gray-400 mb-3">Stuck on a question? Get instant explanations.</p>
-                <NavLink to="/chat" className="block w-full text-center py-2 bg-blue-600 hover:bg-blue-500 text-white rounded-lg text-sm font-bold shadow-lg shadow-blue-900/20 transition-all">
-                    Ask Now
                 </NavLink>
             </div>
-        </div>
+
+            <div className="px-6 py-4 border-t border-white/10 mt-auto bg-black/20">
+                <p className="text-[10px] text-gray-500 text-center leading-relaxed">
+                    Designed & Developed by <br />
+                    <span className="text-blue-400 font-semibold">Aadhil</span><br />
+                    <a href="mailto:aadhildev2025@gmail.com" className="hover:text-blue-300 transition-colors">aadhildev2025@gmail.com</a>
+                </p>
+                <p className="text-[10px] text-gray-600 text-center mt-2 italic">
+                    Open Source for A/L Bio Stream
+                </p>
+            </div>
+        </div >
     );
 };
 
