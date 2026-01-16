@@ -14,8 +14,14 @@ app.use(express.json());
 
 // Database Connection
 mongoose.connect(process.env.MONGO_URI || 'mongodb://localhost:27017/al_masterhub')
-    .then(() => console.log('MongoDB Connected'))
-    .catch(err => console.log(err));
+    .then(() => console.log('MongoDB Connected successfully to:', mongoose.connection.name))
+    .catch(err => {
+        console.error('MongoDB Connection Error:');
+        console.error('Error Name:', err.name);
+        console.error('Error Message:', err.message);
+        if (err.code) console.error('Error Code:', err.code);
+        process.exit(1);
+    });
 
 // Routes
 const authRoutes = require('./routes/auth');

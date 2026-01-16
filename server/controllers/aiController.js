@@ -1,14 +1,20 @@
-const { GoogleGenerativeAI } = require("@google/generative-ai");
+const Groq = require("groq-sdk");
 
-// Initialize Gemini
-const key = process.env.GEMINI_API_KEY || "";
-if (!key) {
-    console.error("CRITICAL: GEMINI_API_KEY is missing!");
-} else {
-    console.log(`GEMINI_API_KEY loaded. Starts with: ${key.substring(0, 4)}... ends with: ...${key.substring(key.length - 4)}`);
+// Lazy initialization of Groq client
+let groq = null;
+
+function getGroqClient() {
+    if (!groq) {
+        const key = process.env.GROQ_API_KEY || "";
+        if (!key) {
+            console.error("CRITICAL: GROQ_API_KEY is missing!");
+        } else {
+            console.log(`GROQ_API_KEY loaded. Starts with: ${key.substring(0, 8)}... ends with: ...${key.substring(key.length - 4)}`);
+        }
+        groq = new Groq({ apiKey: key });
+    }
+    return groq;
 }
-const genAI = new GoogleGenerativeAI(key);
-const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
 
 exports.generateNote = async (req, res) => {
     const { topic, subject } = req.body;
@@ -25,13 +31,18 @@ exports.generateNote = async (req, res) => {
         2. Use bullet points for lists.
         3. Keep paragraphs short (2-3 sentences max).
         
-        IMPORTANT: Use standard Markdown double newlines (\n\n) for paragraph breaks. Do NOT use HTML tags like <br>.
-        NOTE: Avoid using LaTeX formulas (like $\text{C}2$) for simple text. Write "Carbon-2" or just "C2".
+        IMPORTANT: Use standard Markdown double newlines for paragraph breaks. Do NOT use HTML tags like <br>.
+        NOTE: Avoid using LaTeX formulas for simple text. Write "Carbon-2" or just "C2".
         Keep it concise, friendly, and helpful.`;
 
-        const result = await model.generateContent(prompt);
-        const response = await result.response;
-        const text = response.text();
+        const chatCompletion = await getGroqClient().chat.completions.create({
+            messages: [{ role: "user", content: prompt }],
+            model: "llama-3.3-70b-versatile",
+            temperature: 0.7,
+            max_tokens: 1024,
+        });
+
+        const text = chatCompletion.choices[0]?.message?.content || "";
 
         res.json({ content: text });
     } catch (error) {
@@ -40,7 +51,7 @@ exports.generateNote = async (req, res) => {
         res.status(500).json({
             error: "Failed to generate content.",
             details: error.message,
-            apiKeyPresent: !!process.env.GEMINI_API_KEY
+            apiKeyPresent: !!process.env.GROQ_API_KEY
         });
     }
 };
@@ -55,11 +66,17 @@ exports.generateQuiz = async (req, res) => {
             { "question": "", "options": ["A", "B", "C", "D"], "correctAnswer": "index_0_3", "explanation": "" }
         ]`;
 
-        const result = await model.generateContent(prompt);
-        const response = await result.response;
-        const text = response.text().replace(/```json/g, '').replace(/```/g, '').trim();
+        const chatCompletion = await getGroqClient().chat.completions.create({
+            messages: [{ role: "user", content: prompt }],
+            model: "llama-3.3-70b-versatile",
+            temperature: 0.7,
+            max_tokens: 2048,
+        });
 
-        const quiz = JSON.parse(text);
+        const text = chatCompletion.choices[0]?.message?.content || "";
+        const cleanedText = text.replace(/```json/g, '').replace(/```/g, '').trim();
+
+        const quiz = JSON.parse(cleanedText);
         res.json({ quiz });
     } catch (error) {
         console.error("AI Quiz Error:", error);

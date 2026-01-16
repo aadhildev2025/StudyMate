@@ -15,7 +15,7 @@ StudyMate is an intelligent web application designed to assist Advanced Level (A
 - **Runtime:** Node.js
 - **Framework:** Express.js
 - **Database:** MongoDB
-- **AI Model:** Google Gemini API
+- **AI Model:** Groq API (Llama 3.3 70B)
 - **ODM:** Mongoose
 
 ## 🛠️ Installation & Setup
@@ -46,7 +46,7 @@ StudyMate is an intelligent web application designed to assist Advanced Level (A
         ```env
         PORT=5000
         MONGO_URI=your_mongodb_connection_string
-        GEMINI_API_KEY=your_google_gemini_api_key
+        GROQ_API_KEY=your_groq_api_key
         ```
 
     *   **Client (Optional for local dev):** Create a `.env` file in the `client` directory if you need to override defaults.
@@ -81,7 +81,7 @@ You can deploy StudyMate to Vercel easily. Detailed guide below.
     -   Framework Preset: `Other`
     -   Build Command: `npm install` (or leave empty)
     -   Output Directory: `.` (or default)
-    -   **Environment Variables:** Add `MONGO_URI` and `GEMINI_API_KEY` in Vercel Project Settings.
+    -   **Environment Variables:** Add `MONGO_URI` and `GROQ_API_KEY` in Vercel Project Settings.
 
 4.  **Client Deployment:**
     -   Create a *new* Project in Vercel and import the *same* repo again.
