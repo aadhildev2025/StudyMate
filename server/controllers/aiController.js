@@ -30,6 +30,16 @@ exports.generateNote = async (req, res) => {
         res.json({ content: text });
     } catch (error) {
         console.error("AI Error:", error);
+
+        // Diagnostic: List available models if the current one fails
+        try {
+            console.log("Fetching available models for diagnostics...");
+            const models = await genAI.listModels();
+            console.log("Available models:", JSON.stringify(models, null, 2));
+        } catch (listError) {
+            console.error("Could not list models:", listError.message);
+        }
+
         res.status(500).json({
             error: "Failed to generate content.",
             details: error.message,
