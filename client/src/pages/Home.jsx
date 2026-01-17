@@ -1,9 +1,12 @@
 import React from 'react';
-import { BookOpen, FlaskConical, Brain, ChevronRight, Zap } from 'lucide-react';
+import { BookOpen, FlaskConical, Brain, ChevronRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
+import { useTranslation } from 'react-i18next';
 
 const Home = () => {
+    const { t } = useTranslation();
+
     return (
         <div className="space-y-8">
             {/* Hero Section */}
@@ -16,19 +19,18 @@ const Home = () => {
                     >
 
                         <h1 className="text-4xl md:text-6xl font-extrabold text-white mb-4 leading-tight">
-                            Master Your <br />
-                            <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-200 to-purple-200">A/L Exams</span>
+                            {t('masterYour')} <br />
+                            <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-200 to-purple-200">{t('alExams')}</span>
                         </h1>
                         <p className="text-blue-100 text-lg md:text-xl mb-8 leading-relaxed opacity-90 max-w-lg">
-                            Comprehensive study material for Biology, Chemistry, and Physics.
-                            Powered by AI to help you learn faster.
+                            {t('heroDesc')}
                         </p>
                         <div className="flex flex-col sm:flex-row gap-4">
                             <Link to="/subjects" className="px-8 py-3 bg-white text-blue-700 rounded-xl font-bold hover:bg-blue-50 transition-colors text-center">
-                                Start Learning
+                                {t('startLearning')}
                             </Link>
                             <Link to="/quiz" className="px-8 py-3 bg-white/10 text-white border border-white/20 rounded-xl font-bold hover:bg-white/20 transition-colors backdrop-blur-md text-center">
-                                Take a Quiz
+                                {t('takeQuiz')}
                             </Link>
                         </div>
                     </motion.div>
@@ -43,19 +45,19 @@ const Home = () => {
             <section>
                 <div className="flex justify-between items-end mb-6">
                     <div>
-                        <h2 className="text-2xl font-bold text-white">Your Subjects</h2>
-                        <p className="text-gray-400 text-sm mt-1">Select a subject to continue studying</p>
+                        <h2 className="text-2xl font-bold text-white">{t('yourSubjects')}</h2>
+                        <p className="text-gray-400 text-sm mt-1">{t('selectSubject')}</p>
                     </div>
                     <Link to="/subjects" className="text-blue-400 hover:text-blue-300 font-medium flex items-center gap-1 transition-colors">
-                        View all <ChevronRight size={16} />
+                        {t('viewAll')} <ChevronRight size={16} />
                     </Link>
                 </div>
 
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                     {[
-                        { id: 'biology', name: 'Biology', icon: <BookOpen size={24} />, color: 'text-green-400', bg: 'bg-green-500/10 border-green-500/20' },
-                        { id: 'chemistry', name: 'Chemistry', icon: <FlaskConical size={24} />, color: 'text-purple-400', bg: 'bg-purple-500/10 border-purple-500/20' },
-                        { id: 'physics', name: 'Physics', icon: <Brain size={24} />, color: 'text-orange-400', bg: 'bg-orange-500/10 border-orange-500/20' }
+                        { id: 'biology', name: t('biology'), icon: <BookOpen size={24} />, color: 'text-green-400', bg: 'bg-green-500/10 border-green-500/20' },
+                        { id: 'chemistry', name: t('chemistry'), icon: <FlaskConical size={24} />, color: 'text-purple-400', bg: 'bg-purple-500/10 border-purple-500/20' },
+                        { id: 'physics', name: t('physics'), icon: <Brain size={24} />, color: 'text-orange-400', bg: 'bg-orange-500/10 border-orange-500/20' }
                     ].map((sub, i) => (
                         <Link to={`/subjects/${sub.id}`} key={sub.id}>
                             <motion.div
@@ -80,14 +82,13 @@ const Home = () => {
                         <FlaskConical size={32} />
                     </div>
                     <div className="flex-1 text-center md:text-left">
-                        <h3 className="font-bold text-xl text-white">Master Practical (P6)</h3>
+                        <h3 className="font-bold text-xl text-white">{t('masterPractical')}</h3>
                         <p className="text-gray-400 mt-2">
-                            Step-by-step guides for Titration, Electronics, and Food Tests.
-                            Don't lose marks on procedures!
+                            {t('practicalDesc')}
                         </p>
                     </div>
                     <Link to="/practical" className="px-6 py-2 bg-blue-600 hover:bg-blue-500 text-white rounded-lg font-semibold transition-colors shadow-lg shadow-blue-500/25">
-                        Explore Guide
+                        {t('exploreGuide')}
                     </Link>
                 </div>
             </section>
