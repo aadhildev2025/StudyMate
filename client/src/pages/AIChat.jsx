@@ -6,15 +6,19 @@ import rehypeKatex from 'rehype-katex';
 import 'katex/dist/katex.min.css';
 import { API_BASE_URL } from '../config';
 import { useTranslation } from 'react-i18next';
+import { useAuth } from '../context/AuthContext';
 
 const AIChat = () => {
-    const { i18n } = useTranslation();
+    const { t, i18n } = useTranslation();
+    const { currentUser } = useAuth(); // Get current user
     const [messages, setMessages] = useState([
         { role: 'bot', text: 'Hello! I am your AI Study Assistant. Ask me anything about Biology, Chemistry, or Physics.' }
     ]);
     const [input, setInput] = useState('');
+    const [image, setImage] = useState(null);
     const [loading, setLoading] = useState(false);
     const messagesEndRef = useRef(null);
+    const fileInputRef = useRef(null);
 
     const scrollToBottom = () => {
         messagesEndRef.current?.scrollIntoView({ behavior: "smooth", block: "end" });
@@ -24,13 +28,25 @@ const AIChat = () => {
         scrollToBottom();
     }, [messages, loading]);
 
+    const handleImageSelect = (e) => {
+        const file = e.target.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onloadend = () => {
+                setImage(reader.result);
+            };
+            reader.readAsDataURL(file);
+        }
+    };
+
     const handleSend = async (e) => {
         e.preventDefault();
-        if (!input.trim()) return;
+        if (!input.trim() && !image) return;
 
-        const userMsg = { role: 'user', text: input };
+        const userMsg = { role: 'user', text: input, image };
         setMessages(prev => [...prev, userMsg]);
         setInput('');
+        setImage(null);
         setLoading(true);
 
         try {
@@ -41,11 +57,22 @@ const AIChat = () => {
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
                     topic: input,
-                    subject: 'General Science',
-                    language: i18n.language // Send current language
+                    subject: 'General Science', // Context is broad for general chat
+                    language: i18n.language, // Send current language
+                    image: image, // Send base64 image if valid
+                    uid: currentUser ? currentUser.uid : null // Send User ID for rate limiting
                 }),
             });
             const data = await res.json();
+
+            if (res.status === 429) {
+                // Rate limit exceeded
+                setMessages(prev => [...prev, {
+                    role: 'bot',
+                    text: `⚠️ **Daily Limit Reached**\n\n${data.error || "You have reached your daily limit for image uploads. Please try again later."}`
+                }]);
+                return;
+            }
 
             const botMsg = { role: 'bot', text: data.content || "I couldn't generate a response. Please check the API key." };
             setMessages(prev => [...prev, botMsg]);
@@ -84,6 +111,9 @@ const AIChat = () => {
                                     <Bot size={12} /> AI Assistant
                                 </div>
                             )}
+                            {msg.image && (
+                                <img src={msg.image} alt="User upload" className="max-w-full rounded-lg mb-2 max-h-60 object-contain bg-black/20" />
+                            )}
                             <div className="text-sm md:text-base leading-relaxed">
                                 {msg.role === 'bot' ? (
                                     <ReactMarkdown
@@ -121,17 +151,44 @@ const AIChat = () => {
 
             {/* Input */}
             <div className="p-4 bg-white/5 border-t border-white/10">
-                <form onSubmit={handleSend} className="relative">
+                {image && (
+                    <div className="mb-4 relative inline-block">
+                        <img src={image} alt="Preview" className="h-20 w-auto rounded-lg border border-white/20" />
+                        <button
+                            type="button"
+                            onClick={() => setImage(null)}
+                            className="absolute -top-2 -right-2 bg-red-500 text-white rounded-full p-1 shadow-lg hover:bg-red-600 transition-colors"
+                        >
+                            <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><path d="M18 6 6 18" /><path d="m6 6 12 12" /></svg>
+                        </button>
+                    </div>
+                )}
+                <form onSubmit={handleSend} className="relative flex items-center gap-2">
+                    <input
+                        type="file"
+                        accept="image/*"
+                        className="hidden"
+                        ref={fileInputRef}
+                        onChange={handleImageSelect}
+                    />
+                    <button
+                        type="button"
+                        onClick={() => fileInputRef.current?.click()}
+                        className="p-3 bg-white/10 text-gray-300 rounded-xl hover:bg-white/20 hover:text-white transition-colors"
+                        title="Upload Image"
+                    >
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-camera"><path d="M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3l-2.5-3z" /><circle cx="12" cy="13" r="3" /></svg>
+                    </button>
                     <input
                         type="text"
                         value={input}
                         onChange={(e) => setInput(e.target.value)}
-                        placeholder="Ask a doubt..."
+                        placeholder="Ask a doubt or send a photo..."
                         className="w-full bg-black/40 border border-white/10 rounded-xl pl-4 pr-12 py-4 text-white placeholder-gray-500 focus:outline-none focus:border-blue-500/50 transition-colors"
                     />
                     <button
                         type="submit"
-                        disabled={loading}
+                        disabled={loading || (!input.trim() && !image)}
                         className="absolute right-2 top-1/2 -translate-y-1/2 p-2 bg-blue-600 rounded-lg text-white hover:bg-blue-500 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
                     >
                         <Send size={20} />

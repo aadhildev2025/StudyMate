@@ -1,6 +1,7 @@
 import React, { Suspense, lazy } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Layout from './components/layout/Layout';
+import ScrollToTop from './components/layout/ScrollToTop';
 
 // Lazy load pages for performance
 const Home = lazy(() => import('./pages/Home'));
@@ -15,6 +16,7 @@ const Profile = lazy(() => import('./pages/Profile'));
 function App() {
   return (
     <Router>
+      <ScrollToTop />
       <Suspense fallback={
         <div className="flex items-center justify-center min-h-screen">
           <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-600"></div>

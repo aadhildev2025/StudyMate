@@ -44,7 +44,11 @@ const resources = {
             "consultingAI": "Consulting the AI...",
             "regenerateAnswer": "Regenerate Answer",
             "backTo": "Back to",
-            "subject": "Subject"
+            "subject": "Subject",
+            "guestUser": "Guest User",
+            "signInDescription": "Sign in to access premium features like AI image analysis and progress tracking.",
+            "signInWithGoogle": "Sign in with Google",
+            "logout": "Logout"
         }
     },
     ta: {

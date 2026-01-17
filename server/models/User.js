@@ -1,28 +1,15 @@
 const mongoose = require('mongoose');
 
 const UserSchema = new mongoose.Schema({
-    username: {
+    uid: {
         type: String,
         required: true,
         unique: true
     },
-    email: {
-        type: String,
-        required: true,
-        unique: true
-    },
-    password: {
-        type: String,
-        required: true
-    },
-    role: {
-        type: String,
-        enum: ['student', 'admin'],
-        default: 'student'
-    },
-    createdAt: {
-        type: Date,
-        default: Date.now
+    email: String,
+    imageUsage: {
+        count: { type: Number, default: 0 },
+        lastReset: { type: Date, default: Date.now }
     }
 });
 
