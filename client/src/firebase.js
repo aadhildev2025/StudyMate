@@ -4,13 +4,13 @@ import { getAuth, GoogleAuthProvider, signInWithPopup, signOut } from "firebase/
 // Your web app's Firebase configuration
 // For now, these are placeholders. The user needs to replace them or set env vars.
 const firebaseConfig = {
-    apiKey: "AIzaSyCaHd2fznk7iFf1_IoEdoKZpJZkkZ0AuhQ",
-    authDomain: "studymate-fcfc3.firebaseapp.com",
-    projectId: "studymate-fcfc3",
-    storageBucket: "studymate-fcfc3.firebasestorage.app",
-    messagingSenderId: "577527073841",
-    appId: "1:577527073841:web:87e5ed21a106490e71d910",
-    measurementId: "G-8N7CCH96Q2"
+    apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
+    authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN,
+    projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID,
+    storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET,
+    messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID,
+    appId: import.meta.env.VITE_FIREBASE_APP_ID,
+    measurementId: import.meta.env.VITE_FIREBASE_MEASUREMENT_ID
 };
 
 const app = initializeApp(firebaseConfig);
