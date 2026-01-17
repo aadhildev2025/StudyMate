@@ -1,14 +1,21 @@
 import React from 'react';
 import { User, Mail, Code, Heart } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
+import LanguageSwitcher from '../components/layout/LanguageSwitcher';
 
 const Profile = () => {
+    const { t } = useTranslation();
+
     return (
         <div className="space-y-6 animate-fade-in-up">
-            <header className="mb-8">
-                <h1 className="text-3xl font-bold bg-gradient-to-r from-blue-400 to-purple-500 bg-clip-text text-transparent">
-                    Profile & Credits
-                </h1>
-                <p className="text-gray-400 mt-2">Manage your account and view app info.</p>
+            <header className="mb-8 flex justify-between items-start">
+                <div>
+                    <h1 className="text-3xl font-bold bg-gradient-to-r from-blue-400 to-purple-500 bg-clip-text text-transparent">
+                        {t('profileAndCredits')}
+                    </h1>
+                    <p className="text-gray-400 mt-2">{t('manageAccount')}</p>
+                </div>
+                <LanguageSwitcher />
             </header>
 
             {/* User Info Placeholder */}
@@ -18,8 +25,8 @@ const Profile = () => {
                         <User />
                     </div>
                     <div>
-                        <h2 className="text-xl font-semibold text-white">Student</h2>
-                        <p className="text-gray-400">Welcome to StudyMate</p>
+                        <h2 className="text-xl font-semibold text-white">{t('student')}</h2>
+                        <p className="text-gray-400">{t('welcome')}</p>
                     </div>
                 </div>
             </div>
@@ -31,18 +38,18 @@ const Profile = () => {
                 </div>
 
                 <h3 className="text-lg font-semibold text-white mb-4 flex items-center gap-2">
-                    <Heart className="text-red-500 fill-red-500" size={18} /> Credits
+                    <Heart className="text-red-500 fill-red-500" size={18} /> {t('credits')}
                 </h3>
 
                 <div className="space-y-4 text-sm text-gray-300">
                     <p className="leading-relaxed">
-                        StudyMate is a free, open-source project dedicated to the A/L Bio stream community.
+                        {t('appDescription')}
                     </p>
 
                     <div className="border-t border-white/10 pt-4">
-                        <p className="text-gray-400 text-xs uppercase tracking-wider mb-1">Designed & Developed by</p>
+                        <p className="text-gray-400 text-xs uppercase tracking-wider mb-1">{t('designedBy')}</p>
                         <p className="text-lg font-bold text-blue-400">Aadhil</p>
-                        <p className="text-xs text-gray-400">Web Developer</p>
+                        <p className="text-xs text-gray-400">{t('webDeveloper')}</p>
                     </div>
 
                     <div className="flex items-center gap-2 bg-black/30 p-3 rounded-lg border border-white/5 hover:border-blue-500/30 transition-colors">
