@@ -135,7 +135,6 @@ const resources = {
             "subject": "විෂය"
         }
     }
-}
 };
 
 i18n
