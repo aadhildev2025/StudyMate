@@ -17,13 +17,20 @@ function getGroqClient() {
 }
 
 exports.generateNote = async (req, res) => {
-    const { topic, subject } = req.body;
+    const { topic, subject, language = 'en' } = req.body;
+
+    const langMap = {
+        'ta': 'Tamil',
+        'si': 'Sinhala',
+        'en': 'English'
+    };
+    const targetLang = langMap[language] || 'English';
 
     try {
         const prompt = `You are an expert A/L ${subject} tutor. 
         The student asks: "${topic}".
         
-        Provide a clear, accurate, and easy-to-understand answer.
+        Provide a clear, accurate, and easy-to-understand answer in ${targetLang}.
         IMPORTANT: Start answering the question IMMEDIATELY. Do NOT use introductory phrases like "Great question!", "Here is a breakdown", or "You're doing well". Just give the answer.
         
         STRUCTURE RULES:
@@ -57,10 +64,18 @@ exports.generateNote = async (req, res) => {
 };
 
 exports.generateQuiz = async (req, res) => {
-    const { topic, subject, difficulty } = req.body;
+    const { topic, subject, difficulty, language = 'en' } = req.body;
+
+    const langMap = {
+        'ta': 'Tamil',
+        'si': 'Sinhala',
+        'en': 'English'
+    };
+    const targetLang = langMap[language] || 'English';
 
     try {
         const prompt = `Generate 5 multiple-choice questions (MCQs) for A/L ${subject} on "${topic}". Difficulty: ${difficulty}.
+        The questions and options MUST be in ${targetLang}.
         Return ONLY a JSON array with this structure:
         [
             { "question": "", "options": ["A", "B", "C", "D"], "correctAnswer": "index_0_3", "explanation": "" }

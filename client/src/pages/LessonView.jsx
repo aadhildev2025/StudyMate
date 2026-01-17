@@ -6,7 +6,7 @@ import { API_BASE_URL } from '../config';
 import { useTranslation } from 'react-i18next';
 
 const LessonView = () => {
-    const { t } = useTranslation();
+    const { t, i18n } = useTranslation();
     const { subjectId, topicId } = useParams();
     const [content, setContent] = useState(null);
     const [loading, setLoading] = useState(false);
@@ -17,7 +17,11 @@ const LessonView = () => {
             const res = await fetch(`${API_BASE_URL}/ai/note`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ topic: topicId, subject: subjectId }),
+                body: JSON.stringify({
+                    topic: topicId,
+                    subject: subjectId,
+                    language: i18n.language // Send current language code (en, ta, si)
+                }),
             });
             const data = await res.json();
             setContent(data.content);

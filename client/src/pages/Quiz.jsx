@@ -3,8 +3,10 @@ import { ArrowLeft, Sparkles, AlertCircle, CheckCircle, XCircle, Brain } from 'l
 import { Link } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { API_BASE_URL } from '../config';
+import { useTranslation } from 'react-i18next';
 
 const Quiz = () => {
+    const { i18n } = useTranslation();
     const [topic, setTopic] = useState('');
     const [subject, setSubject] = useState('Biology');
     const [difficulty, setDifficulty] = useState('Medium');
@@ -25,7 +27,12 @@ const Quiz = () => {
             const res = await fetch(`${API_BASE_URL}/ai/quiz`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ topic, subject, difficulty }),
+                body: JSON.stringify({
+                    topic,
+                    subject,
+                    difficulty,
+                    language: i18n.language
+                }),
             });
             const data = await res.json();
 

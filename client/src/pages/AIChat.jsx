@@ -5,8 +5,10 @@ import remarkMath from 'remark-math';
 import rehypeKatex from 'rehype-katex';
 import 'katex/dist/katex.min.css';
 import { API_BASE_URL } from '../config';
+import { useTranslation } from 'react-i18next';
 
 const AIChat = () => {
+    const { i18n } = useTranslation();
     const [messages, setMessages] = useState([
         { role: 'bot', text: 'Hello! I am your AI Study Assistant. Ask me anything about Biology, Chemistry, or Physics.' }
     ]);
@@ -37,7 +39,11 @@ const AIChat = () => {
             const res = await fetch(`${API_BASE_URL}/ai/note`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ topic: input, subject: 'General Science' }),
+                body: JSON.stringify({
+                    topic: input,
+                    subject: 'General Science',
+                    language: i18n.language // Send current language
+                }),
             });
             const data = await res.json();
 
