@@ -43,6 +43,20 @@ const AIChat = () => {
         e.preventDefault();
         if (!input.trim() && !image) return;
 
+        // Prevent guests from sending images
+        if (image && !currentUser) {
+            setMessages(prev => [...prev, { role: 'user', text: input, image }]);
+            setTimeout(() => {
+                setMessages(prev => [...prev, {
+                    role: 'bot',
+                    text: `🔒 **Sign In Required**\n\nPlease sign in with your Google account to use the AI Vision feature (uploading images).`
+                }]);
+            }, 500);
+            setInput('');
+            setImage(null);
+            return;
+        }
+
         const userMsg = { role: 'user', text: input, image };
         setMessages(prev => [...prev, userMsg]);
         setInput('');
