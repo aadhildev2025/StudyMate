@@ -2,6 +2,7 @@ import React from 'react';
 import { FlaskConical, ClipboardList, PenTool, ArrowRight, Microscope } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
+import { useTranslation } from 'react-i18next';
 
 const practicals = [
     {
@@ -42,14 +43,14 @@ const commonExperiments = [
 ];
 
 const Practical = () => {
+    const { t } = useTranslation();
     return (
         <div className="space-y-8">
             <section className="relative rounded-3xl overflow-hidden p-8 md:p-12 bg-gradient-to-r from-blue-900 to-indigo-900 shadow-2xl">
                 <div className="relative z-10">
-                    <h1 className="text-4xl font-extrabold text-white mb-4">Practical Guide (P6)</h1>
+                    <h1 className="text-4xl font-extrabold text-white mb-4">{t('practicalGuideP6')}</h1>
                     <p className="text-blue-100 text-lg max-w-2xl leading-relaxed">
-                        Master your A/L practical exams. access step-by-step procedures,
-                        observation guides, and error analysis for all core experiments.
+                        {t('practicalGuideDesc')}
                     </p>
                 </div>
                 <div className="absolute top-0 right-0 w-64 h-64 bg-blue-500/20 rounded-full blur-3xl -mr-16 -mt-16"></div>
@@ -70,17 +71,17 @@ const Practical = () => {
                                     {p.icon}
                                 </div>
                                 <span className="text-xs font-bold px-2 py-1 bg-white/10 rounded-lg text-gray-300">
-                                    {p.count} Exp
+                                    {p.count} {t('exp')}
                                 </span>
                             </div>
-                            <h3 className="font-bold text-xl text-white mb-2">{p.title}</h3>
+                            <h3 className="font-bold text-xl text-white mb-2">{t(p.subjectId)} {t('practicalGuide')}</h3>
                         </div>
 
                         <Link
                             to={`/subjects/${p.subjectId}`}
                             className="mt-6 flex items-center justify-between py-2 px-4 rounded-xl bg-white/5 hover:bg-white/10 border border-white/5 transition-all group-hover:border-white/20"
                         >
-                            <span className="text-sm font-semibold text-gray-300 group-hover:text-white">View Experiments</span>
+                            <span className="text-sm font-semibold text-gray-300 group-hover:text-white">{t('viewExperiments')}</span>
                             <ArrowRight size={16} className="text-gray-400 group-hover:translate-x-1 transition-transform" />
                         </Link>
                     </motion.div>
@@ -93,7 +94,7 @@ const Practical = () => {
                     <div className="p-2 bg-blue-500/20 rounded-lg text-blue-400">
                         <Microscope size={24} />
                     </div>
-                    <h2 className="text-2xl font-bold text-white">Frequently Asked Experiments</h2>
+                    <h2 className="text-2xl font-bold text-white">{t('frequentExperiments')}</h2>
                 </div>
 
                 <div className="grid gap-4 md:grid-cols-2">
@@ -105,12 +106,12 @@ const Practical = () => {
                         >
                             <div className="flex items-center gap-3">
                                 <div className={`w-2 h-2 rounded-full ${exp.subject === 'biology' ? 'bg-green-500' :
-                                        exp.subject === 'chemistry' ? 'bg-purple-500' : 'bg-orange-500'
+                                    exp.subject === 'chemistry' ? 'bg-purple-500' : 'bg-orange-500'
                                     } shadow-[0_0_8px_currentColor]`} />
                                 <span className="font-medium text-gray-200 group-hover:text-white transition-colors">{exp.name}</span>
                             </div>
                             <span className="text-xs font-semibold text-blue-400 opacity-0 group-hover:opacity-100 transition-opacity flex items-center gap-1">
-                                Read Guide <ArrowRight size={12} />
+                                {t('readGuide')} <ArrowRight size={12} />
                             </span>
                         </Link>
                     ))}

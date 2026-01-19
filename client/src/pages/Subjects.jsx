@@ -10,7 +10,7 @@ const Subjects = () => {
         {
             id: 'biology',
             name: t('biology'),
-            description: t('bioDesc'),
+            description: t('biologyDesc'),
             icon: <BookOpen size={32} />,
             color: 'from-green-500/20 to-emerald-500/20',
             iconColor: 'text-green-400',
@@ -19,7 +19,7 @@ const Subjects = () => {
         {
             id: 'chemistry',
             name: t('chemistry'),
-            description: t('chemDesc'),
+            description: t('chemistryDesc'),
             icon: <FlaskConical size={32} />,
             color: 'from-purple-500/20 to-indigo-500/20',
             iconColor: 'text-purple-400',
@@ -28,7 +28,7 @@ const Subjects = () => {
         {
             id: 'physics',
             name: t('physics'),
-            description: t('physDesc'),
+            description: t('physicsDesc'),
             icon: <Brain size={32} />,
             color: 'from-orange-500/20 to-red-500/20',
             iconColor: 'text-orange-400',

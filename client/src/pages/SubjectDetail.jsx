@@ -3,8 +3,10 @@ import { useParams, Link } from 'react-router-dom';
 import { ArrowLeft, BookOpen, Lock, Search } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { syllabusData } from '../data/syllabus';
+import { useTranslation } from 'react-i18next';
 
 const SubjectDetail = () => {
+    const { t } = useTranslation();
     const { id } = useParams();
     const subject = syllabusData[id];
     const [searchTerm, setSearchTerm] = useState('');
@@ -24,17 +26,17 @@ const SubjectDetail = () => {
                 <div className="absolute top-0 right-0 w-64 h-64 bg-white opacity-10 rounded-full blur-3xl -mr-16 -mt-16"></div>
 
                 <Link to="/subjects" className="inline-flex items-center text-white/80 hover:text-white mb-6 transition-colors">
-                    <ArrowLeft size={20} className="mr-2" /> Back to Subjects
+                    <ArrowLeft size={20} className="mr-2" /> {t('backToSubjects')}
                 </Link>
 
-                <h1 className="text-4xl md:text-5xl font-extrabold text-white mb-2 tracking-tight">{subject.name}</h1>
-                <p className="text-white/90 text-lg md:text-xl font-medium max-w-xl">{subject.description}</p>
+                <h1 className="text-4xl md:text-5xl font-extrabold text-white mb-2 tracking-tight">{t(subject.id)}</h1>
+                <p className="text-white/90 text-lg md:text-xl font-medium max-w-xl">{t(subject.id + 'Desc')}</p>
 
                 {/* Search Bar within Header */}
                 <div className="mt-8 max-w-md relative">
                     <input
                         type="text"
-                        placeholder={`Search ${subject.name} topics...`}
+                        placeholder={`${t('searchTopics')}`}
                         value={searchTerm}
                         onChange={(e) => setSearchTerm(e.target.value)}
                         className="w-full pl-12 pr-4 py-3 rounded-xl bg-white/20 backdrop-blur-md border border-white/30 text-white placeholder-white/60 focus:outline-none focus:bg-white/30 transition-all shadow-lg"
@@ -71,7 +73,7 @@ const SubjectDetail = () => {
 
                             <div>
                                 <h3 className="font-bold text-xl mb-1 group-hover:text-blue-400 transition-colors">{unit.title}</h3>
-                                <p className="text-sm text-gray-400">{unit.lessons} Lessons • AI Notes Available</p>
+                                <p className="text-sm text-gray-400">{unit.lessons} {t('lessons')} • {t('aiNotesAvailable')}</p>
                             </div>
 
                             {unit.unlocked && (
@@ -79,14 +81,14 @@ const SubjectDetail = () => {
                                     to={`/subjects/${id}/${unit.title}`}
                                     className="mt-6 w-full py-3 bg-white/10 hover:bg-white/20 border border-white/5 rounded-xl font-semibold text-center transition-all flex items-center justify-center gap-2"
                                 >
-                                    Start Learning
+                                    {t('startLearning')}
                                 </Link>
                             )}
                         </motion.div>
                     ))
                 ) : (
                     <div className="col-span-2 text-center py-10 text-gray-400">
-                        No topics found matching "{searchTerm}"
+                        {t('noTopicsFound')} "{searchTerm}"
                     </div>
                 )}
             </div>

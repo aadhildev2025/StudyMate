@@ -6,10 +6,10 @@ import { API_BASE_URL } from '../config';
 import { useTranslation } from 'react-i18next';
 
 const Quiz = () => {
-    const { i18n } = useTranslation();
+    const { t, i18n } = useTranslation();
     const [topic, setTopic] = useState('');
-    const [subject, setSubject] = useState('Biology');
-    const [difficulty, setDifficulty] = useState('Medium');
+    const [subject, setSubject] = useState(t('biology'));
+    const [difficulty, setDifficulty] = useState(t('medium'));
     const [questions, setQuestions] = useState([]);
     const [currentQuestion, setCurrentQuestion] = useState(0);
     const [loading, setLoading] = useState(false);
@@ -88,10 +88,10 @@ const Quiz = () => {
             {!questions.length && (
                 <div className="text-center space-y-4 mb-12">
                     <h1 className="text-4xl font-extrabold bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">
-                        AI Quiz Generator
+                        {t('aiQuizGenerator')}
                     </h1>
                     <p className="text-gray-400 max-w-lg mx-auto">
-                        Test your knowledge on any A/L topic. Just type it in and let the AI challenge you!
+                        {t('quizDesc')}
                     </p>
                 </div>
             )}
@@ -105,20 +105,20 @@ const Quiz = () => {
                 >
                     <form onSubmit={startQuiz} className="space-y-6">
                         <div>
-                            <label className="block text-sm font-medium text-gray-400 mb-2">Subject</label>
+                            <label className="block text-sm font-medium text-gray-400 mb-2">{t('subject')}</label>
                             <select
                                 value={subject}
                                 onChange={(e) => setSubject(e.target.value)}
                                 className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-blue-500"
                             >
-                                <option value="Biology" className="bg-gray-900 text-white">Biology</option>
-                                <option value="Chemistry" className="bg-gray-900 text-white">Chemistry</option>
-                                <option value="Physics" className="bg-gray-900 text-white">Physics</option>
+                                <option value="Biology" className="bg-gray-900 text-white">{t('biology')}</option>
+                                <option value="Chemistry" className="bg-gray-900 text-white">{t('chemistry')}</option>
+                                <option value="Physics" className="bg-gray-900 text-white">{t('physics')}</option>
                             </select>
                         </div>
 
                         <div>
-                            <label className="block text-sm font-medium text-gray-400 mb-2">Topic</label>
+                            <label className="block text-sm font-medium text-gray-400 mb-2">{t('topic')}</label>
                             <input
                                 type="text"
                                 value={topic}
@@ -130,9 +130,9 @@ const Quiz = () => {
                         </div>
 
                         <div>
-                            <label className="block text-sm font-medium text-gray-400 mb-2">Difficulty</label>
+                            <label className="block text-sm font-medium text-gray-400 mb-2">{t('difficulty')}</label>
                             <div className="flex gap-4">
-                                {['Easy', 'Medium', 'Hard'].map((diff) => (
+                                {['easy', 'medium', 'hard'].map((diff) => (
                                     <button
                                         key={diff}
                                         type="button"
@@ -142,7 +142,7 @@ const Quiz = () => {
                                             : 'bg-white/5 text-gray-400 hover:bg-white/10'
                                             }`}
                                     >
-                                        {diff}
+                                        {t(diff)}
                                     </button>
                                 ))}
                             </div>
@@ -152,7 +152,7 @@ const Quiz = () => {
                             type="submit"
                             className="w-full py-4 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-xl font-bold text-lg hover:shadow-xl hover:shadow-blue-500/20 transition-all flex items-center justify-center gap-2"
                         >
-                            <Sparkles size={20} /> Generate Quiz
+                            <Sparkles size={20} /> {t('generateQuiz')}
                         </button>
                     </form>
                 </motion.div>
@@ -162,8 +162,8 @@ const Quiz = () => {
             {loading && (
                 <div className="text-center py-20">
                     <div className="w-16 h-16 border-4 border-blue-500 border-t-transparent rounded-full animate-spin mx-auto mb-6"></div>
-                    <h3 className="text-xl font-bold text-white mb-2">Generating Questions...</h3>
-                    <p className="text-gray-400">The AI is crafting a unique quiz for you.</p>
+                    <h3 className="text-xl font-bold text-white mb-2">{t('generatingQuestions')}</h3>
+                    <p className="text-gray-400">{t('aiCrafting')}</p>
                 </div>
             )}
 
@@ -171,8 +171,8 @@ const Quiz = () => {
             {questions.length > 0 && !showResult && (
                 <div className="glass-card p-8">
                     <div className="flex justify-between items-center mb-8">
-                        <span className="text-sm font-medium text-gray-400">Question {currentQuestion + 1} of {questions.length}</span>
-                        <span className="px-3 py-1 bg-blue-500/20 text-blue-300 rounded-full text-xs font-bold">{score} Correct</span>
+                        <span className="text-sm font-medium text-gray-400">{t('question')} {currentQuestion + 1} {t('of')} {questions.length}</span>
+                        <span className="px-3 py-1 bg-blue-500/20 text-blue-300 rounded-full text-xs font-bold">{score} {t('correct')}</span>
                     </div>
 
                     <h2 className="text-2xl font-bold text-white mb-8 leading-snug">
@@ -216,7 +216,7 @@ const Quiz = () => {
                             className="mb-6 p-4 rounded-xl bg-blue-900/20 border border-blue-500/20"
                         >
                             <p className="text-blue-200 text-sm">
-                                <span className="font-bold">Explanation: </span>
+                                <span className="font-bold">{t('explanation')}: </span>
                                 {questions[currentQuestion].explanation || "Correct answer is indicated above."}
                             </p>
                         </motion.div>
@@ -228,7 +228,7 @@ const Quiz = () => {
                                 onClick={nextQuestion}
                                 className="px-8 py-3 bg-blue-600 hover:bg-blue-500 text-white rounded-xl font-bold transition-colors"
                             >
-                                {currentQuestion + 1 === questions.length ? 'Finish Quiz' : 'Next Question'}
+                                {currentQuestion + 1 === questions.length ? t('finishQuiz') : t('nextQuestion')}
                             </button>
                         )}
                     </div>
@@ -245,14 +245,14 @@ const Quiz = () => {
                     <div className="w-24 h-24 bg-gradient-to-tr from-green-400 to-blue-500 rounded-full flex items-center justify-center mx-auto mb-6 shadow-xl shadow-green-500/20">
                         <Brain size={48} className="text-white" />
                     </div>
-                    <h2 className="text-3xl font-extrabold text-white mb-2">Quiz Completed!</h2>
-                    <p className="text-gray-400 mb-8">You scored <span className="text-white font-bold text-xl">{score} / {questions.length}</span></p>
+                    <h2 className="text-3xl font-extrabold text-white mb-2">{t('quizCompleted')}</h2>
+                    <p className="text-gray-400 mb-8">{t('yourScore')} <span className="text-white font-bold text-xl">{score} / {questions.length}</span></p>
 
                     <button
                         onClick={resetQuiz}
                         className="px-8 py-3 bg-white/10 border border-white/20 hover:bg-white/20 text-white rounded-xl font-bold transition-all"
                     >
-                        Try Another Topic
+                        {t('tryAnotherTopic')}
                     </button>
                 </motion.div>
             )}

@@ -96,7 +96,9 @@ exports.generateNote = async (req, res) => {
                             type: "text",
                             text: `You are an expert A/L ${subject} tutor. 
                             The user has sent an image and asks: "${topic}".
-                            Analyze the image and provide a clear, accurate, and easy-to-understand answer in ${targetLang}.
+                            Analyze the image and provide a clear, accurate, and easy-to-understand answer STRICTLY in ${targetLang}.
+                            DO NOT mix ${targetLang} with any other language (like English, Tamil, or Sinhala). 
+                            The entire response MUST be in ${targetLang} only.
                             STRUCTURE RULES:
                             1. Use **Bold Text** for main points.
                             2. Use bullet points for lists.
@@ -116,8 +118,9 @@ exports.generateNote = async (req, res) => {
             const prompt = `You are an expert A/L ${subject} tutor. 
             The student asks: "${topic}".
             
-            Provide a clear, accurate, and easy-to-understand answer in ${targetLang}.
-            IMPORTANT: Start answering the question IMMEDIATELY. Do NOT use introductory phrases like "Great question!", "Here is a breakdown", or "You're doing well". Just give the answer.
+            Provide a clear, accurate, and easy-to-understand answer STRICTLY in ${targetLang}.
+            IMPORTANT: The entire response MUST be in ${targetLang} only. DO NOT mix with English, Tamil, or Sinhala.
+            Start answering the question IMMEDIATELY. Do NOT use introductory phrases like "Great question!", "Here is a breakdown", or "You're doing well". Just give the answer.
             
             STRUCTURE RULES:
             1. Do NOT use large headers (like # or ##). Instead, use **Bold Text** for main points.
@@ -175,7 +178,8 @@ exports.generateQuiz = async (req, res) => {
 
     try {
         const prompt = `Generate 5 multiple-choice questions (MCQs) for A/L ${subject} on "${topic}". Difficulty: ${difficulty}.
-        The questions and options MUST be in ${targetLang}.
+        The questions, options, and explanation MUST be STRICTLY in ${targetLang}. 
+        DO NOT mix ${targetLang} with any other language.
         Return ONLY a JSON array with this structure:
         [
             { "question": "", "options": ["A", "B", "C", "D"], "correctAnswer": "index_0_3", "explanation": "" }
