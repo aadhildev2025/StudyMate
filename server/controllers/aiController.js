@@ -96,13 +96,26 @@ exports.generateNote = async (req, res) => {
                             type: "text",
                             text: `You are an expert A/L ${subject} tutor. 
                             The user has sent an image and asks: "${topic}".
-                            Analyze the image and provide a clear, accurate, and easy-to-understand answer STRICTLY in ${targetLang}.
+                            Analyze the image and provide a comprehensive, detailed, and expanded explanation STRICTLY in ${targetLang}.
+                            
+                            STRICT LENGTH & DETAIL RULES:
+                            1. **NO SUMMARIES**: The response must be a deep-dive explanation, suitable for university-level understanding.
+                            2. **MINIMUM LENGTH**: Write at least 4-5 detailed paragraphs.
+                            3. **ELABORATE**: For every main point, write at least 3-4 sentences explaining the "Why" and "How".
+                            4. **EXAMPLES**: You MUST provide a real-world example for every concept to ensure clarity.
+                            5. **LOCAL LANGUAGES**: If the language is Tamil or Sinhala, translate the FULL DEPTH of the English explanation. DO NOT shorten it. It must be just as long and detailed as an English textbook explanation.
+
+                            FOR PHYSICS:
+                            - Simplified Equations: Always use simplified versions of equations ($F=ma$). Explain them step-by-step.
+                            - Define every variable clearly.
+                            - Use easy-to-understand examples.
+
                             DO NOT mix ${targetLang} with any other language (like English, Tamil, or Sinhala). 
                             The entire response MUST be in ${targetLang} only.
                             STRUCTURE RULES:
                             1. Use **Bold Text** for main points.
                             2. Use bullet points for lists.
-                            3. Keep paragraphs short.`
+                            3. Use clean paragraphs with double spacing.`
                         },
                         {
                             type: "image_url",
@@ -118,18 +131,31 @@ exports.generateNote = async (req, res) => {
             const prompt = `You are an expert A/L ${subject} tutor. 
             The student asks: "${topic}".
             
-            Provide a clear, accurate, and easy-to-understand answer STRICTLY in ${targetLang}.
+            Provide a comprehensive, detailed, and expanded explanation STRICTLY in ${targetLang}.
+            
+            STRICT LENGTH & DETAIL RULES:
+            1. **NO SUMMARIES**: The response must be a deep-dive explanation, suitable for university-level understanding.
+            2. **MINIMUM LENGTH**: Write at least 4-5 detailed paragraphs.
+            3. **ELABORATE**: For every main point, write at least 3-4 sentences explaining the "Why" and "How".
+            4. **EXAMPLES**: You MUST provide a real-world example for every concept to ensure clarity.
+            5. **LOCAL LANGUAGES**: If the language is Tamil or Sinhala, translate the FULL DEPTH of the English explanation. DO NOT shorten it. It must be just as long and detailed as an English textbook explanation.
+
+            FOR PHYSICS:
+            - Simplified Equations: Always use simplified versions of equations ($F=ma$). Explain them step-by-step.
+            - Define every variable clearly.
+            - Use easy-to-understand examples.
+
             IMPORTANT: The entire response MUST be in ${targetLang} only. DO NOT mix with English, Tamil, or Sinhala.
             Start answering the question IMMEDIATELY. Do NOT use introductory phrases like "Great question!", "Here is a breakdown", or "You're doing well". Just give the answer.
             
             STRUCTURE RULES:
             1. Do NOT use large headers (like # or ##). Instead, use **Bold Text** for main points.
             2. Use bullet points for lists.
-            3. Keep paragraphs short (2-3 sentences max).
+            3. Use clean paragraphs with double spacing.
             
             IMPORTANT: Use standard Markdown double newlines for paragraph breaks. Do NOT use HTML tags like <br>.
             NOTE: Avoid using LaTeX formulas for simple text. Write "Carbon-2" or just "C2".
-            Keep it concise, friendly, and helpful.`;
+            Keep it helpful and thorough.`;
 
             messages = [{ role: "user", content: prompt }];
         }
@@ -138,7 +164,7 @@ exports.generateNote = async (req, res) => {
             messages: messages,
             model: model,
             temperature: 0.7,
-            max_tokens: 1024,
+            max_tokens: 4096,
         });
 
         const text = chatCompletion.choices[0]?.message?.content || "";
@@ -177,13 +203,13 @@ exports.generateQuiz = async (req, res) => {
     const targetLang = langMap[language] || 'English';
 
     try {
-        const prompt = `Generate 5 multiple-choice questions (MCQs) for A/L ${subject} on "${topic}". Difficulty: ${difficulty}.
+        const prompt = `Generate 5 multiple - choice questions(MCQs) for A / L ${subject} on "${topic}".Difficulty: ${difficulty}.
         The questions, options, and explanation MUST be STRICTLY in ${targetLang}. 
         DO NOT mix ${targetLang} with any other language.
         Return ONLY a JSON array with this structure:
-        [
-            { "question": "", "options": ["A", "B", "C", "D"], "correctAnswer": "index_0_3", "explanation": "" }
-        ]`;
+            [
+                { "question": "", "options": ["A", "B", "C", "D"], "correctAnswer": "index_0_3", "explanation": "" }
+            ]`;
 
         const chatCompletion = await getGroqClient().chat.completions.create({
             messages: [{ role: "user", content: prompt }],
