@@ -128,17 +128,33 @@ exports.generateNote = async (req, res) => {
             ];
         } else {
             // Text-only request
-            const prompt = `You are an expert A/L ${subject} tutor. 
-            The student asks: "${topic}".
-            
-            Provide a comprehensive, detailed, and expanded explanation STRICTLY in ${targetLang}.
-            
+            const isGreeting = /^(hi|hello|hey|greetings|hao|hola|namaste|vanakkam|assalamu|ayubowan)\W*$/i.test(topic.trim());
+            const isVeryShort = topic.trim().split(/\s+/).length <= 2;
+
+            let lengthRules = `
             STRICT LENGTH & DETAIL RULES:
             1. **NO SUMMARIES**: The response must be a deep-dive explanation, suitable for university-level understanding.
             2. **MINIMUM LENGTH**: Write at least 4-5 detailed paragraphs.
             3. **ELABORATE**: For every main point, write at least 3-4 sentences explaining the "Why" and "How".
             4. **EXAMPLES**: You MUST provide a real-world example for every concept to ensure clarity.
             5. **LOCAL LANGUAGES**: If the language is Tamil or Sinhala, translate the FULL DEPTH of the English explanation. DO NOT shorten it. It must be just as long and detailed as an English textbook explanation.
+            `;
+
+            if (isGreeting || (isVeryShort && !subject)) {
+                lengthRules = `
+                RELAXED RULES (GREETING/SHORT INPUT):
+                1. If the user says hello or hi, respond politely and briefly.
+                2. Do NOT provide a multi-paragraph explanation unless asked for a specific topic.
+                3. Keep it conversational and helpful.
+                `;
+            }
+
+            const prompt = `You are an expert A/L ${subject || 'General Studies'} tutor. 
+            The student says: "${topic}".
+            
+            Provide a response STRICTLY in ${targetLang}.
+            
+            ${lengthRules}
 
             FOR PHYSICS:
             - Simplified Equations: Always use simplified versions of equations ($F=ma$). Explain them step-by-step.

@@ -17,11 +17,9 @@ app.use(express.urlencoded({ limit: '50mb', extended: true }));
 mongoose.connect(process.env.MONGO_URI || 'mongodb://localhost:27017/al_masterhub')
     .then(() => console.log('MongoDB Connected successfully to:', mongoose.connection.name))
     .catch(err => {
-        console.error('MongoDB Connection Error:');
-        console.error('Error Name:', err.name);
-        console.error('Error Message:', err.message);
+        console.error('MongoDB Connection Error:', err.message);
         if (err.code) console.error('Error Code:', err.code);
-        process.exit(1);
+        console.warn('Proceeding without MongoDB connection. Some features may not work.');
     });
 
 // Routes
