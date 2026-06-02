@@ -3,13 +3,13 @@ import { FlaskConical, ClipboardList, PenTool, ArrowRight, Microscope } from 'lu
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { useTranslation } from 'react-i18next';
+import { syllabusData } from '../data/syllabus';
 
 const practicals = [
     {
         id: 1,
         title: 'Biology Practicals',
         subjectId: 'biology',
-        count: 12,
         icon: <ClipboardList className="text-green-400" size={32} />,
         color: 'from-green-500/20 to-emerald-500/20',
         borderColor: 'border-green-500/30'
@@ -18,7 +18,6 @@ const practicals = [
         id: 2,
         title: 'Chemistry Practicals',
         subjectId: 'chemistry',
-        count: 20,
         icon: <FlaskConical className="text-purple-400" size={32} />,
         color: 'from-purple-500/20 to-indigo-500/20',
         borderColor: 'border-purple-500/30'
@@ -27,7 +26,6 @@ const practicals = [
         id: 3,
         title: 'Physics Practicals',
         subjectId: 'physics',
-        count: 15,
         icon: <PenTool className="text-orange-400" size={32} />,
         color: 'from-orange-500/20 to-red-500/20',
         borderColor: 'border-orange-500/30'
@@ -44,6 +42,11 @@ const commonExperiments = [
 
 const Practical = () => {
     const { t } = useTranslation();
+
+    const getCount = (subjectId) => {
+        return syllabusData[subjectId]?.practicals?.length || 0;
+    };
+
     return (
         <div className="space-y-8">
             <section className="relative rounded-3xl overflow-hidden p-8 md:p-12 bg-gradient-to-r from-blue-900 to-indigo-900 shadow-2xl">
@@ -71,14 +74,14 @@ const Practical = () => {
                                     {p.icon}
                                 </div>
                                 <span className="text-xs font-bold px-2 py-1 bg-white/10 rounded-lg text-gray-300">
-                                    {p.count} {t('exp')}
+                                    {getCount(p.subjectId)} {t('exp')}
                                 </span>
                             </div>
                             <h3 className="font-bold text-xl text-white mb-2">{t(p.subjectId)} {t('practicalGuide')}</h3>
                         </div>
 
                         <Link
-                            to={`/subjects/${p.subjectId}`}
+                            to={`/subjects/${p.subjectId}?tab=practicals`}
                             className="mt-6 flex items-center justify-between py-2 px-4 rounded-xl bg-white/5 hover:bg-white/10 border border-white/5 transition-all group-hover:border-white/20"
                         >
                             <span className="text-sm font-semibold text-gray-300 group-hover:text-white">{t('viewExperiments')}</span>
@@ -101,7 +104,7 @@ const Practical = () => {
                     {commonExperiments.map((exp, i) => (
                         <Link
                             key={i}
-                            to={`/subjects/${exp.subject}/${exp.name}`}
+                            to={`/subjects/${exp.subject}/${exp.name}?type=practical`}
                             className="p-4 rounded-xl bg-white/5 border border-white/5 hover:bg-white/10 hover:border-white/10 transition-all flex items-center justify-between group"
                         >
                             <div className="flex items-center gap-3">
@@ -122,3 +125,4 @@ const Practical = () => {
 };
 
 export default Practical;
+

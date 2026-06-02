@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useParams, Link } from 'react-router-dom';
+import { useParams, Link, useSearchParams } from 'react-router-dom';
 import { Sparkles, BookOpen, Loader, ArrowLeft } from 'lucide-react';
 import ReactMarkdown from 'react-markdown';
 import { API_BASE_URL } from '../config';
@@ -8,6 +8,9 @@ import { useTranslation } from 'react-i18next';
 const LessonView = () => {
     const { t, i18n } = useTranslation();
     const { subjectId, topicId } = useParams();
+    const [searchParams] = useSearchParams();
+    const isPractical = searchParams.get('type') === 'practical';
+    const isCustom = searchParams.get('type') === 'custom';
     const [content, setContent] = useState(null);
     const [loading, setLoading] = useState(false);
 
@@ -20,7 +23,9 @@ const LessonView = () => {
                 body: JSON.stringify({
                     topic: topicId,
                     subject: subjectId,
-                    language: i18n.language // Send current language code (en, ta, si)
+                    language: i18n.language, // Send current language code (en, ta, si)
+                    isPractical: isPractical,
+                    isCustom: isCustom
                 }),
             });
             const data = await res.json();
@@ -33,9 +38,11 @@ const LessonView = () => {
         }
     };
 
+    const backTab = searchParams.get('tab') || (isPractical ? 'practicals' : 'theory');
+
     return (
         <div className="space-y-6">
-            <Link to={`/subjects/${subjectId}`} className="inline-flex items-center text-gray-400 hover:text-white transition-colors">
+            <Link to={`/subjects/${subjectId}?tab=${backTab}`} className="inline-flex items-center text-gray-400 hover:text-white transition-colors">
                 <ArrowLeft size={18} className="mr-2" /> {t('backTo')} {subjectId}
             </Link>
 

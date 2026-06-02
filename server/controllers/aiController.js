@@ -19,9 +19,9 @@ function getGroqClient() {
 const User = require('../models/User');
 
 exports.generateNote = async (req, res) => {
-    const { topic, subject, language = 'en', image, uid } = req.body;
+    const { topic, subject, language = 'en', image, uid, isPractical, isCustom } = req.body;
 
-    console.log(`Received generateNote request: Topic="${topic}", Subject="${subject}", Language="${language}", ImagePresent=${!!image}, UID=${uid}`);
+    console.log(`Received generateNote request: Topic="${topic}", Subject="${subject}", Language="${language}", ImagePresent=${!!image}, UID=${uid}, isPractical=${isPractical}, isCustom=${isCustom}`);
 
     // Rate Limiting Logic for Images
     if (image) {
@@ -98,6 +98,8 @@ exports.generateNote = async (req, res) => {
                             The user has sent an image and asks: "${topic}".
                             Analyze the image and provide a comprehensive, detailed, and expanded explanation STRICTLY in ${targetLang}.
                             
+                            ${isPractical ? 'SPECIAL NOTE: This is an image of a practical experiment or lab problem. Ensure you detail the experimental setup, readings, observations, and relevant procedures in your explanation.' : ''}
+
                             STRICT LENGTH & DETAIL RULES:
                             1. **NO SUMMARIES**: The response must be a deep-dive explanation, suitable for university-level understanding.
                             2. **MINIMUM LENGTH**: Write at least 4-5 detailed paragraphs.
@@ -155,6 +157,19 @@ exports.generateNote = async (req, res) => {
             Provide a response STRICTLY in ${targetLang}.
             
             ${lengthRules}
+
+            ${isPractical ? `
+             SPECIAL PRACTICAL EXAM INSTRUCTIONS:
+             This topic is a core practical/experiment for A/L ${subject}.
+             Provide a complete, comprehensive Practical Lab Guide including:
+             1. **Objective / Principle**: Write the scientific theory or equations behind the experiment.
+             2. **Apparatus & Materials Required**: List all instruments (e.g. Vernier caliper, beaker, reagents, etc.) needed.
+             3. **Step-by-step Procedure**: Detail clear, numbered instructions on how to conduct the experiment.
+             4. **Observations, Measurements & Calculations**: Describe what to measure/record (e.g., sample table headers, graphs to plot) and mathematical formulas to use.
+             5. **Sources of Error & Precautions**: List potential experimental errors (random/systematic) and how to minimize them, along with key safety precautions.
+             
+             Ensure the guidelines are extremely detailed so the student can write their lab report or answer P6 exam questions perfectly.
+             ` : ''}
 
             FOR PHYSICS:
             - Simplified Equations: Always use simplified versions of equations ($F=ma$). Explain them step-by-step.

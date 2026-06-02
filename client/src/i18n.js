@@ -78,7 +78,15 @@ const resources = {
             "exp": "Exp",
             "viewExperiments": "View Experiments",
             "frequentExperiments": "Frequently Asked Experiments",
-            "readGuide": "Read Guide"
+            "readGuide": "Read Guide",
+            "theory": "Theory",
+            "practicals": "Practicals",
+            "searchPracticals": "Search practicals...",
+            "noPracticalsFound": "No practicals found matching",
+            "exploreExperiment": "Explore Experiment",
+            "learnCustomTopic": "Learn Custom Topic",
+            "generateNotesFor": "Generate comprehensive AI notes for",
+            "askAI": "Ask AI"
         }
     },
     ta: {
@@ -156,7 +164,15 @@ const resources = {
             "exp": "சோதனைகள்",
             "viewExperiments": "சோதனைகளைப் பார்க்க",
             "frequentExperiments": "அடிக்கடி கேட்கப்படும் சோதனைகள்",
-            "readGuide": "வழிகாட்டியைப் படிக்க"
+            "readGuide": "வழிகாட்டியைப் படிக்க",
+            "theory": "கோட்பாடு (Theory)",
+            "practicals": "செய்முறைகள் (Practicals)",
+            "searchPracticals": "செய்முறைகளைத் தேடுங்கள்...",
+            "noPracticalsFound": "பொருந்தும் செய்முறைகள் எதுவும் இல்லை",
+            "exploreExperiment": "சோதனையை ஆராய்க",
+            "learnCustomTopic": "தனிப்பயன் தலைப்பைக் கற்றுக்கொள்ளுங்கள்",
+            "generateNotesFor": "இதற்கான முழுமையான AI குறிப்புகளை உருவாக்குங்கள்",
+            "askAI": "AI-யிடம் கேளுங்கள்"
         }
     },
     si: {
@@ -234,7 +250,15 @@ const resources = {
             "exp": "අත්හදා බැලීම්",
             "viewExperiments": "අත්හදා බැලීම් බලන්න",
             "frequentExperiments": "නිතර අසනු ලබන අත්හදා බැලීම්",
-            "readGuide": "මාර්ගෝපදේශය කියවන්න"
+            "readGuide": "මාර්ගෝපදේශය කියවන්න",
+            "theory": "න්‍යාය (Theory)",
+            "practicals": "ප්‍රායෝගික (Practicals)",
+            "searchPracticals": "ප්‍රායෝගික ක්‍රියාකාරකම් සොයන්න...",
+            "noPracticalsFound": "ගැලපෙන ප්‍රායෝගික ක්‍රියාකාරකම් කිසිවක් හමු නොවීය",
+            "exploreExperiment": "අත්හදා බැලීම ගවේෂණය කරන්න",
+            "learnCustomTopic": "වෙනත් මාතෘකාවක් ඉගෙන ගන්න",
+            "generateNotesFor": "මේ සඳහා පරිපූර්ණ AI සටහන් සාදන්න",
+            "askAI": "AI වෙතින් විමසන්න"
         }
     }
 };

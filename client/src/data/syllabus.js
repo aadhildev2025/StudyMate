@@ -15,6 +15,20 @@ export const syllabusData = {
             { id: 8, title: 'Environmental Biology', lessons: 7, unlocked: true },
             { id: 9, title: 'Microbiology', lessons: 6, unlocked: true },
             { id: 10, title: 'Applied Biology', lessons: 5, unlocked: true },
+        ],
+        practicals: [
+            { id: 1, title: 'Food Tests (Starch, Glucose, Protein, Lipids)', lessons: 1, unlocked: true, description: 'Identify biological macromolecules using chemical reagents.' },
+            { id: 2, title: 'Use of Light Microscope & Slide Preparation', lessons: 1, unlocked: true, description: 'Prepare temporary slides and observe structures under a light microscope.' },
+            { id: 3, title: 'Study of Plant and Animal Tissues', lessons: 1, unlocked: true, description: 'Examine tissues using permanent slides (xylem, phloem, parenchyma, epidermis, etc.).' },
+            { id: 4, title: 'Observation of Evolutionary Diversity of Organisms', lessons: 1, unlocked: true, description: 'Study specimen diversity from Monera, Protista, Fungi, Plantae, and Animalia.' },
+            { id: 5, title: 'Mitosis Study using Onion Root Tips', lessons: 1, unlocked: true, description: 'Observe different stages of cell division (mitosis) under the microscope.' },
+            { id: 6, title: 'Solute Potential of Plant Tissues (Plasmolysis)', lessons: 1, unlocked: true, description: 'Determine solute potential of epidermal cells by observing plasmolysis.' },
+            { id: 7, title: 'Effect of Temperature/pH on Enzyme Activity', lessons: 1, unlocked: true, description: 'Investigate the rate of enzymatic reactions under varied conditions.' },
+            { id: 8, title: 'Demonstration of Photosynthesis & Oxygen Release', lessons: 1, unlocked: true, description: 'Demonstrate photosynthesis and measure the rate of oxygen gas released.' },
+            { id: 9, title: 'Aerobic and Anaerobic Respiration in Seeds', lessons: 1, unlocked: true, description: 'Demonstrate and measure gas exchange during cellular respiration.' },
+            { id: 10, title: 'Measurement of Transpiration using Potometer', lessons: 1, unlocked: true, description: 'Investigate water loss and rate of transpiration under different conditions.' },
+            { id: 11, title: 'Mammalian Organ Systems Study', lessons: 1, unlocked: true, description: 'Analyze structural features of mammalian organ systems using models/diagrams.' },
+            { id: 12, title: 'Field Study of an Ecosystem', lessons: 1, unlocked: true, description: 'Study biodiversity and abiotic factors of a local terrestrial or aquatic ecosystem.' },
         ]
     },
     chemistry: {
@@ -37,6 +51,20 @@ export const syllabusData = {
             { id: 12, title: 'Equilibrium', lessons: 8, unlocked: true },
             { id: 13, title: 'Electrochemistry', lessons: 7, unlocked: true },
             { id: 14, title: 'Industrial Chemistry and Environmental Pollution', lessons: 8, unlocked: true },
+        ],
+        practicals: [
+            { id: 1, title: 'Acid-Base Titration', lessons: 1, unlocked: true, description: 'Determine standard concentration of solutions using titration indicators.' },
+            { id: 2, title: 'Redox Titration (Permanganate & Oxalic Acid/Fe2+)', lessons: 1, unlocked: true, description: 'Estimate Fe2+ or oxalic acid concentration using potassium permanganate.' },
+            { id: 3, title: 'Iodometric Titration (Thiosulfate & Copper)', lessons: 1, unlocked: true, description: 'Estimate copper concentration using standard sodium thiosulfate solution.' },
+            { id: 4, title: 'Qualitative Analysis of Cations (Group I to V)', lessons: 1, unlocked: true, description: 'Identify metal cations in a solution using selective precipitation tests.' },
+            { id: 5, title: 'Qualitative Analysis of Anions', lessons: 1, unlocked: true, description: 'Identify common anions like halides, sulfate, carbonate, and nitrate.' },
+            { id: 6, title: 'Determination of Enthalpy of Neutralization', lessons: 1, unlocked: true, description: 'Measure temperature changes to calculate heat of neutralization.' },
+            { id: 7, title: 'Factors Affecting Chemical Reaction Rates', lessons: 1, unlocked: true, description: 'Study effect of concentration, temperature, and catalysts on reaction speed.' },
+            { id: 8, title: 'Flame Tests for Metal Ions', lessons: 1, unlocked: true, description: 'Identify group 1 and 2 metal cations based on characteristic flame colors.' },
+            { id: 9, title: 'Determination of Solubility Product of Ca(OH)2', lessons: 1, unlocked: true, description: 'Estimate solubility product constant through titration of saturated Ca(OH)2.' },
+            { id: 10, title: 'Detection of Organic Functional Groups', lessons: 1, unlocked: true, description: 'Use tests like Tollens, Fehling, sodium, and NaHCO3 to identify functional groups.' },
+            { id: 11, title: 'Analysis of Water Samples & Fertilizers', lessons: 1, unlocked: true, description: 'Assess hardness of water, chloride content, and nitrogen content in fertilizers.' },
+            { id: 12, title: 'Preparation of Mohr\'s Salt/Potash Alum', lessons: 1, unlocked: true, description: 'Synthesize double salts and calculate percentage yield from raw materials.' },
         ]
     },
     physics: {
@@ -56,6 +84,24 @@ export const syllabusData = {
             { id: 9, title: 'Electronics', lessons: 8, unlocked: true },
             { id: 10, title: 'Mechanical Properties of Matter', lessons: 5, unlocked: true },
             { id: 11, title: 'Matter and Radiation', lessons: 4, unlocked: true },
+        ],
+        practicals: [
+            { id: 1, title: 'Vernier Caliper Measurements', lessons: 1, unlocked: true, description: 'Measure internal/external diameters and depth using a Vernier caliper.' },
+            { id: 2, title: 'Micrometer Screw Gauge Measurements', lessons: 1, unlocked: true, description: 'Measure wire diameter and sheet thickness using a micrometer screw gauge.' },
+            { id: 3, title: 'Spherometer Radius of Curvature', lessons: 1, unlocked: true, description: 'Determine radius of curvature of a spherical surface using a spherometer.' },
+            { id: 4, title: 'Simple Pendulum (g determination)', lessons: 1, unlocked: true, description: 'Find the acceleration due to gravity (g) using a simple pendulum.' },
+            { id: 5, title: 'Spectrometer (Angle & Refractive Index)', lessons: 1, unlocked: true, description: 'Measure angle of a prism and refractive index of glass using a spectrometer.' },
+            { id: 6, title: 'Metre Bridge (Resistance & Resistivity)', lessons: 1, unlocked: true, description: 'Find resistance and resistivity of a wire using a Metre bridge.' },
+            { id: 7, title: 'Potentiometer (EMF & Internal Resistance)', lessons: 1, unlocked: true, description: 'Compare cell EMFs and find internal cell resistance using a potentiometer.' },
+            { id: 8, title: 'Resonance Tube (Velocity of Sound in Air)', lessons: 1, unlocked: true, description: 'Determine the speed of sound in air at room temperature using tuning forks.' },
+            { id: 9, title: 'Constant Volume Gas Thermometer', lessons: 1, unlocked: true, description: 'Measure the pressure variation of a gas at constant volume with temperature.' },
+            { id: 10, title: 'Sonometer (Vibrations of Stretched Strings)', lessons: 1, unlocked: true, description: 'Investigate the relation between tension, length, and frequency of a vibrating string.' },
+            { id: 11, title: 'Surface Tension of Water (Capillary Rise)', lessons: 1, unlocked: true, description: 'Determine surface tension of water using the capillary rise method.' },
+            { id: 12, title: 'Viscosity of a Liquid (Terminal Velocity)', lessons: 1, unlocked: true, description: 'Measure viscosity constant of a highly viscous liquid by terminal velocity.' },
+            { id: 13, title: 'Focal Length of Mirrors and Lenses', lessons: 1, unlocked: true, description: 'Find focal length of concave mirror and convex lens using u-v method.' },
+            { id: 14, title: 'Semiconductor Diode Characteristics', lessons: 1, unlocked: true, description: 'Plot forward and reverse bias characteristics of a p-n junction diode.' },
+            { id: 15, title: 'Transistor Characteristics (Common Emitter)', lessons: 1, unlocked: true, description: 'Plot input/output characteristics of a bipolar junction transistor.' },
         ]
     }
 };
+
